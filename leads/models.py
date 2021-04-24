@@ -3,11 +3,16 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     pass
+    def __str__(self):
+        return self.email
 
 # Database table called Lead and columns are variables inside the class
 
 class Agent(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.email  
 
 class Lead(models.Model):
     first_name = models.CharField(max_length=100)
@@ -15,3 +20,6 @@ class Lead(models.Model):
     age  = models.IntegerField(default=0)
 
     agent = models.ForeignKey("Agent", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
